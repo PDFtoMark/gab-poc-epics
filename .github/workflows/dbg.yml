@@ -1,0 +1,19 @@
+name: dbg
+on:
+  issues:
+    types: [opened, closed, reopened]
+permissions:
+  issues: write
+  contents: read
+jobs:
+  dbg:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const ev = await github.rest.issues.listEventsForTimeline({
+              owner: context.repo.owner, repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+            });
+            console.log(JSON.stringify(ev.data.map(e => ({event: e.event, source: e.source})), null, 2));
