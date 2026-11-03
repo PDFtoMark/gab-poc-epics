@@ -5,6 +5,7 @@ on:
 permissions:
   issues: write
   contents: read
+  pull-requests: write
 jobs:
   epics:
     runs-on: ubuntu-latest
